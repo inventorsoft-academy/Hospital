@@ -11,5 +11,4 @@ public interface DoctorInterface {
     boolean removePatientByBloodType(String bloodType);
 
     String showAllPatient();
-
 }

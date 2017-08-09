@@ -7,17 +7,33 @@ public abstract class People {
     protected String firstName;
     protected Gender gender;
 
-    public People(String lastName, String firstName, String gender) {
+    People(String lastName, String firstName, String gender) {
         n++;
         num=n;
         this.lastName = lastName;
         this.firstName = firstName;
         switch (gender) {
-            case "M":
+            case "m":
                 this.gender = Gender.MALE;
                 break;
             default:
                 this.gender = Gender.FEMALE;
         }
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getGender() {
+        return gender.toString();
+    }
+
+    public int getNum() {
+        return num;
     }
 }
