@@ -7,6 +7,10 @@ public class Doctor extends People implements DoctorInterface {
     private String specialisation;
     private List<Patient> patients;
 
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
     public Doctor(String lastName, String firstName, String gender, String specialisation) {
         super(lastName, firstName, gender);
         this.specialisation = specialisation;
@@ -98,6 +102,25 @@ public class Doctor extends People implements DoctorInterface {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", gender=" + gender +
-                "specialisation='" + specialisation + '\'';
+                ", specialisation='" + specialisation + '\'';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Doctor doctor = (Doctor) o;
+
+        if (specialisation != null ? !specialisation.equals(doctor.specialisation) : doctor.specialisation != null)
+            return false;
+        return patients != null ? patients.equals(doctor.patients) : doctor.patients == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = specialisation != null ? specialisation.hashCode() : 0;
+        result = 31 * result + (patients != null ? patients.hashCode() : 0);
+        return result;
     }
 }

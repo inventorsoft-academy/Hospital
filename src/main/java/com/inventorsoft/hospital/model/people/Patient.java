@@ -69,4 +69,24 @@ public class Patient extends People {
                 ", bloodType=" + bloodType +
                 ", gender=" + gender;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Patient patient = (Patient) o;
+
+        if (DOB != null ? !DOB.equals(patient.DOB) : patient.DOB != null) return false;
+        if (bloodType != patient.bloodType) return false;
+        return diagnoses != null ? diagnoses.equals(patient.diagnoses) : patient.diagnoses == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = DOB != null ? DOB.hashCode() : 0;
+        result = 31 * result + (bloodType != null ? bloodType.hashCode() : 0);
+        result = 31 * result + (diagnoses != null ? diagnoses.hashCode() : 0);
+        return result;
+    }
 }
