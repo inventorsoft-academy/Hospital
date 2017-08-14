@@ -1,4 +1,4 @@
-package com.inventorsoft.hospital.model.people;
+package com.inventorsoft.hospital.model.person;
 
 import com.inventorsoft.hospital.model.diagnose.Diagnose;
 

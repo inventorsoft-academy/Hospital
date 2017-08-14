@@ -1,6 +1,6 @@
 package com.inventorsoft.hospital.model.hospital;
 
-import com.inventorsoft.hospital.model.people.Doctor;
+import com.inventorsoft.hospital.model.person.Doctor;
 
 import java.util.ArrayList;
 import java.util.List;

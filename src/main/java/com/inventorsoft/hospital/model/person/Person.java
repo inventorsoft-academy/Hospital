@@ -1,4 +1,4 @@
-package com.inventorsoft.hospital.model.people;
+package com.inventorsoft.hospital.model.person;
 
 public abstract class Person {
     private static int n;
