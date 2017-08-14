@@ -9,7 +9,7 @@ public abstract class Person {
 
     Person(String lastName, String firstName, String gender) {
         n++;
-        num=n;
+        num = n;
         this.lastName = lastName;
         this.firstName = firstName;
         switch (gender) {

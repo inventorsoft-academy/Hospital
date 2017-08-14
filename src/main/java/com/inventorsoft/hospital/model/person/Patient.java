@@ -66,7 +66,7 @@ public class Patient extends Person {
     public String toString() {
         return "num=" + num +
                 ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender +
-                ", DOB='" + DOB + ", bloodType=" + bloodType;
+                ", DOB=" + DOB + ", bloodType=" + bloodType;
     }
 
     @Override

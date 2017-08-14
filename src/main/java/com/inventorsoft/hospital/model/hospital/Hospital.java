@@ -5,19 +5,19 @@ import com.inventorsoft.hospital.model.person.Doctor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hospital{
-    private List <Doctor> doctors;
+public class Hospital {
+    private List<Doctor> doctors;
 
-    public Hospital(){
-        doctors=new ArrayList<>();
+    public Hospital() {
+        doctors = new ArrayList<>();
     }
 
     public List<Doctor> getDoctors() {
         return doctors;
     }
 
-    public boolean addDoctor(String lastName, String firstName, String gender, String specialisation){
-        doctors.add(new Doctor(lastName,firstName,gender,specialisation));
+    public boolean addDoctor(String lastName, String firstName, String gender, String specialisation) {
+        doctors.add(new Doctor(lastName, firstName, gender, specialisation));
         return true;
     }
 
