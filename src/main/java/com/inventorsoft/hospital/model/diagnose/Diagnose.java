@@ -13,8 +13,7 @@ public class Diagnose {
 
     @Override
     public String toString() {
-        return "Diagnose Description: " + Description + '\n' +
-                ", date = " + date + '\n';
+        return "Diagnose Description: " + Description + ", date = " + date;
     }
 
     @Override
