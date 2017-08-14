@@ -5,9 +5,9 @@ import com.inventorsoft.hospital.model.diagnose.Diagnose;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Patient extends People {
+public class Patient extends Person {
     private String DOB;
-    BloodType bloodType;
+    private BloodType bloodType;
     private List<Diagnose> diagnoses;
 
     Patient(String firstName, String lastName, String gender, String DOB, String bloodType) {
@@ -41,16 +41,20 @@ public class Patient extends People {
         diagnoses = new ArrayList<>();
     }
 
-    public String getBloodType() {
-        return bloodType.toString();
+    public List<Diagnose> getDiagnoses() {
+        return diagnoses;
     }
 
-    boolean addDiagnoses(String diagnosesDescription) {
+    public BloodType getBloodType() {
+        return bloodType;
+    }
+
+    public boolean addDiagnoses(String diagnosesDescription) {
         diagnoses.add(new Diagnose(diagnosesDescription));
         return true;
     }
 
-    public String showAllDiadnoses() {
+    public String showAllDiagnoses() {
         StringBuilder builder = new StringBuilder();
         for (Diagnose d : diagnoses) {
             builder.append(d.toString());
@@ -58,16 +62,11 @@ public class Patient extends People {
         return String.valueOf(builder);
     }
 
-
     @Override
     public String toString() {
-
-        return "Patient" +
-                " firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' + '\n' +
-                ", DOB='" + DOB + '\'' + '\n' +
-                ", bloodType=" + bloodType +
-                ", gender=" + gender;
+        return "num=" + num +
+                ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender +
+                ", DOB='" + DOB + ", bloodType=" + bloodType;
     }
 
     @Override

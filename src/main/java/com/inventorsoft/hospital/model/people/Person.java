@@ -1,13 +1,13 @@
 package com.inventorsoft.hospital.model.people;
 
-public abstract class People {
+public abstract class Person {
     private static int n;
     protected int num;
     protected String lastName;
     protected String firstName;
     protected Gender gender;
 
-    People(String lastName, String firstName, String gender) {
+    Person(String lastName, String firstName, String gender) {
         n++;
         num=n;
         this.lastName = lastName;
