@@ -16,6 +16,10 @@ public class Hospital {
         return doctors;
     }
 
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
+    }
+
     public boolean addDoctor(String lastName, String firstName, String gender, String specialisation) {
         doctors.add(new Doctor(lastName, firstName, gender, specialisation));
         return true;

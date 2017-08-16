@@ -21,6 +21,10 @@ public class Doctor extends Person {
         return specialisation;
     }
 
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
     public boolean addPatient(String firstName, String lastName, String gender, String DOB, String bloodType) {
         patients.add(new Patient(firstName, lastName, gender, DOB, bloodType));
         return true;
@@ -92,7 +96,7 @@ public class Doctor extends Person {
     @Override
     public String toString() {
         return "num=" + num + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender +
-                ", specialisation='" + specialisation;
+                ", specialisation=" + specialisation;
     }
 
     @Override

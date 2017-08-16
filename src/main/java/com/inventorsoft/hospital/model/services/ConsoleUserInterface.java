@@ -7,19 +7,17 @@ import com.inventorsoft.hospital.model.person.Patient;
 import java.util.Scanner;
 
 public class ConsoleUserInterface {
-    public void run() {
 
+    public void run() {
         Hospital hospital = new Hospital();
         FileWork fileWork =new FileWork();
         Scanner scan = new Scanner(System.in);
-
+        System.out.println(fileWork.load(hospital));
         boolean isReturn = true;
         while (isReturn) {
             System.out.println("Select variant \n" +
                     "1 - Show all doctor \n" +
-                    "2 - Save system state \n" +
-                    "3 - Load system state \n" +
-                    "4 - Exit system");
+                    "2 - Exit system");
             int var = scan.nextInt();
             switch (var) {
                 case 1:
@@ -148,7 +146,7 @@ public class ConsoleUserInterface {
                                                     int numPat = scan.nextInt();
                                                     Patient pat = null;
                                                     for (Patient p : doc.getPatients()) {
-                                                        if (p.getNum() == num) {
+                                                        if (p.getNum() == numPat) {
                                                             pat = p;
                                                             break;
                                                         }
@@ -198,17 +196,12 @@ public class ConsoleUserInterface {
                     }
                     break;
                 case 2:
-                    System.out.println(fileWork.save(hospital));
-                    break;
-                case 3:
-                    System.out.println(fileWork.load(hospital));
-                    break;
-                case 4:
                     isReturn = false;
                     break;
                 default:
                     System.out.println("Error input!!");
             }
         }
+        System.out.println(fileWork.save(hospital));
     }
 }

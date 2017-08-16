@@ -62,11 +62,15 @@ public class Patient extends Person {
         return String.valueOf(builder);
     }
 
+    public void setDiagnoses(List<Diagnose> diagnoses) {
+        this.diagnoses = diagnoses;
+    }
+
     @Override
     public String toString() {
         return "num=" + num +
-                ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender +
-                ", DOB=" + DOB + ", bloodType=" + bloodType;
+                ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender + ", DOB=" + DOB
+                + ", bloodType=" + bloodType;
     }
 
     @Override

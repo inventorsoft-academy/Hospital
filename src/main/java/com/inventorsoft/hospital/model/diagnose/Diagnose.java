@@ -1,19 +1,24 @@
 package com.inventorsoft.hospital.model.diagnose;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Diagnose {
     private String Description;
-    private LocalDateTime date;
+    private String date;
 
     public Diagnose(String description) {
         Description = description;
-        this.date = LocalDateTime.now();
+        this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
-        return "Diagnose Description: " + Description + ", date = " + date;
+        return "Description = " + Description + ", date = " + date;
     }
 
     @Override
