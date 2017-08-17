@@ -10,6 +10,23 @@ import java.io.*;
 
 public class FileWork implements HospitalServices {
     private final static File file = new File("src\\main\\resources\\data.txt");
+    private final static File fileID = new File("src\\main\\resources\\id.txt");
+
+    @Override
+    public int loadID() {
+        String line;
+        int result=0;
+        try {
+            BufferedReader reader =new BufferedReader(new FileReader(file));
+            while ((line=reader.readLine()) !=null) {
+                result = Integer.parseInt(line);
+            }
+            reader.close();
+        } catch (IOException | NumberFormatException ex) {
+            result = 0;
+        }
+        return result;
+    }
 
     @Override
     public boolean save(final Hospital hospital) {

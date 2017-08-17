@@ -21,6 +21,14 @@ public abstract class Person {
         }
     }
 
+    public static void setN(int n) {
+        Person.n = n;
+    }
+
+    public static int getN() {
+        return n;
+    }
+
     public String getLastName() {
         return lastName;
     }
