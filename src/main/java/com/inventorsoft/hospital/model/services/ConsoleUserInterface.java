@@ -3,22 +3,42 @@ package com.inventorsoft.hospital.model.services;
 import com.inventorsoft.hospital.model.hospital.Hospital;
 import com.inventorsoft.hospital.model.person.Doctor;
 import com.inventorsoft.hospital.model.person.Patient;
+import com.inventorsoft.hospital.model.person.Person;
+import org.apache.log4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleUserInterface {
 
+    private static final Logger log = Logger.getLogger(ConsoleUserInterface.class);
+
     public void run() {
+        Person.setN(loadID());
         Hospital hospital = new Hospital();
-        FileWork fileWork =new FileWork();
         Scanner scan = new Scanner(System.in);
-        System.out.println(fileWork.load(hospital));
+        HospitalServices hospitalServices;
+        System.out.println("Enter format to work program");
+        System.out.println("Select variant \n 1 - txt \n 2 - json");
+        int formatVar=scan.nextInt();
+        switch (formatVar) {
+            case 1:
+                hospitalServices = new FileWork();
+                break;
+            default:
+                hospitalServices = new JSONFormat();
+        }
+        System.out.println(hospitalServices.load(hospital));
         boolean isReturn = true;
         while (isReturn) {
             System.out.println("Select variant \n" +
                     "1 - Show all doctor \n" +
                     "2 - Exit system");
             int var = scan.nextInt();
+//            log.info("user select "+var);
             switch (var) {
                 case 1:
                     boolean isReturnDoc = true;
@@ -202,6 +222,22 @@ public class ConsoleUserInterface {
                     System.out.println("Error input!!");
             }
         }
-        System.out.println(fileWork.save(hospital));
+        System.out.println(hospitalServices.save(hospital));
+    }
+
+    private static int loadID() {
+        final File file = new File("src\\main\\resources\\data.txt");
+        String line;
+        int result=0;
+        try {
+            BufferedReader reader =new BufferedReader(new FileReader(file));
+            while ((line=reader.readLine()) !=null) {
+                result = Integer.parseInt(line);
+            }
+            reader.close();
+        } catch (IOException | NumberFormatException ex) {
+            result = 0;
+        }
+        return result;
     }
 }
