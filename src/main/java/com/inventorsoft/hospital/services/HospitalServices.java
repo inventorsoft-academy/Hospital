@@ -1,4 +1,4 @@
-package com.inventorsoft.hospital.model.services;
+package com.inventorsoft.hospital.services;
 
 import com.inventorsoft.hospital.model.hospital.Hospital;
 

@@ -1,1 +1,21 @@
-{"doctors":[]}
+{
+  "doctors": [
+    {
+      "num": 1,
+      "lastName": "e",
+      "firstName": "g",
+      "gender": "FEMALE",
+      "specialisation": "h",
+      "patients": [
+        {
+          "num": 2,
+          "lastName": "j",
+          "firstName": "g",
+          "gender": "FEMALE",
+          "bloodType": "IV_N",
+          "diagnoses": []
+        }
+      ]
+    }
+  ]
+}

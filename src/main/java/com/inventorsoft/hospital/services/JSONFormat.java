@@ -1,4 +1,4 @@
-package com.inventorsoft.hospital.model.services;
+package com.inventorsoft.hospital.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inventorsoft.hospital.model.hospital.Hospital;
@@ -10,7 +10,7 @@ public class JSONFormat implements HospitalServices {
     private final static File file = new File("src\\main\\resources\\data.json");
 
     @Override
-    public boolean save(Hospital hospital) {
+    public boolean save(final Hospital hospital) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(file, hospital);
@@ -24,7 +24,7 @@ public class JSONFormat implements HospitalServices {
     public boolean load(Hospital hospital) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.readValue(file, Hospital.class);
+            hospital=mapper.readValue(file, Hospital.class);
             return true;
         } catch (IOException e) {
             return false;
