@@ -1,9 +1,12 @@
 package com.inventorsoft.hospital.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.inventorsoft.hospital.model.hospital.Hospital;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONFormat implements HospitalServices {
@@ -11,7 +14,7 @@ public class JSONFormat implements HospitalServices {
 
     @Override
     public boolean save(final Hospital hospital) {
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter mapper = new ObjectMapper().writer().withDefaultPrettyPrinter();;
         try {
             mapper.writeValue(file, hospital);
             return true;
@@ -23,11 +26,32 @@ public class JSONFormat implements HospitalServices {
     @Override
     public boolean load(Hospital hospital) {
         ObjectMapper mapper = new ObjectMapper();
+        Hospital h;
         try {
-            hospital=mapper.readValue(file, Hospital.class);
-            return true;
+            h = mapper.readValue(file, Hospital.class);
+
         } catch (IOException e) {
             return false;
         }
+        hospital.setDoctors(h.getDoctors());
+        loadID();
+        return true;
+    }
+
+    private static int loadID() {
+        final File file = new File("src\\main\\resources\\data.txt");
+        String line;
+        int result = 0;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            while ((line = reader.readLine()) != null) {
+                result = Integer.parseInt(line);
+            }
+            reader.close();
+        } catch (IOException | NumberFormatException ex) {
+            result = 0;
+            ConsoleUserInterface.log.error(ex.getMessage());
+        }
+        return result;
     }
 }

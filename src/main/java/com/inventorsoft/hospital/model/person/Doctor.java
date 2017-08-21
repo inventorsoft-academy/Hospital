@@ -1,15 +1,21 @@
 package com.inventorsoft.hospital.model.person;
 
+import com.inventorsoft.hospital.services.ConsoleUserInterface;
+
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Doctor extends Person {
+    @NotNull(message = "Specialisation mast be given")
+    @Size(min = 3, message = "Specialisation description length mast be 3 characters")
     private String specialisation;
-    private List<Patient> patients;
 
-    public List<Patient> getPatients() {
-        return patients;
-    }
+    private List<Patient> patients;
 
     public Doctor(String lastName, String firstName, String gender, String specialisation) {
         super(lastName, firstName, gender);
@@ -17,17 +23,28 @@ public class Doctor extends Person {
         patients = new ArrayList<>();
     }
 
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
     public String getSpecialisation() {
         return specialisation;
     }
 
-    public void setPatients(List<Patient> patients) {
-        this.patients = patients;
-    }
-
     public boolean addPatient(String firstName, String lastName, String gender, String DOB, String bloodType) {
-        patients.add(new Patient(firstName, lastName, gender, DOB, bloodType));
-        return true;
+        Patient patient = new Patient(firstName, lastName, gender, DOB, bloodType);
+
+        if (validate(patient, Validation.buildDefaultValidatorFactory().getValidator())) {
+            patients.add(patient);
+            ConsoleUserInterface.log.info("User add new patient: last name" + lastName
+                    + " first name " + firstName
+                    + " gender " + gender
+                    + " DOB " + DOB
+                    + " blood type " + bloodType);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean removePatientByFirstName(String firstName) {
@@ -77,7 +94,7 @@ public class Doctor extends Person {
     public boolean removePatientByBloodType(String bloodType) {
         int k = 0;
         for (Patient p : patients) {
-            if (p.getBloodType().equals(bloodType)) {
+            if (bloodType.equals(p.getBloodType())) {
                 patients.remove(p);
                 k++;
             }

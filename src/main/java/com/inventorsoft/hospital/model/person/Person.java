@@ -1,10 +1,22 @@
 package com.inventorsoft.hospital.model.person;
 
-public abstract class Person {
+import com.inventorsoft.hospital.services.MyValidator;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public abstract class Person implements MyValidator {
     private static int n;
+
     protected int num;
+
+    @NotNull(message = "last name mast be given")
+    @Size(min = 3, message = "last name mas be min size 3 characters")
     protected String lastName;
+
+    @NotNull(message = "first name mast be given")
     protected String firstName;
+
     protected Gender gender;
 
     Person(String lastName, String firstName, String gender) {
@@ -23,10 +35,6 @@ public abstract class Person {
 
     public static void setN(int n) {
         Person.n = n;
-    }
-
-    public static int getN() {
-        return n;
     }
 
     public String getLastName() {

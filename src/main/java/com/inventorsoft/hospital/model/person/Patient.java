@@ -1,12 +1,20 @@
 package com.inventorsoft.hospital.model.person;
 
 import com.inventorsoft.hospital.model.diagnose.Diagnose;
+import com.inventorsoft.hospital.services.ConsoleUserInterface;
 
+import javax.validation.Validation;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Patient extends Person {
+
+    @NotNull(message = "DOB mast be given")
+    @Size(min = 3, message = "Min DOB length mast be 3 characters")
     private String DOB;
+
     private BloodType bloodType;
     private List<Diagnose> diagnoses;
 
@@ -45,13 +53,20 @@ public class Patient extends Person {
         return diagnoses;
     }
 
-    public BloodType getBloodType() {
+    BloodType getBloodType() {
         return bloodType;
     }
 
     public boolean addDiagnoses(String diagnosesDescription) {
-        diagnoses.add(new Diagnose(diagnosesDescription));
-        return true;
+        Diagnose diagnose = new Diagnose(diagnosesDescription);
+
+        if (validate(diagnose, Validation.buildDefaultValidatorFactory().getValidator())) {
+            diagnoses.add(diagnose);
+            ConsoleUserInterface.log.info("User  add diagnoses by description " + diagnosesDescription);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String showAllDiagnoses() {
@@ -59,11 +74,7 @@ public class Patient extends Person {
         for (Diagnose d : diagnoses) {
             builder.append(d.toString());
         }
-        return String.valueOf(builder);
-    }
-
-    public void setDiagnoses(List<Diagnose> diagnoses) {
-        this.diagnoses = diagnoses;
+        return builder.toString();
     }
 
     @Override

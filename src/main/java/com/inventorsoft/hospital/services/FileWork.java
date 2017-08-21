@@ -40,34 +40,48 @@ public class FileWork implements HospitalServices {
     @Override
     public boolean load(Hospital hospital) {
         try {
-            BufferedReader reader =new BufferedReader(new FileReader(file));
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
-            int countDoctor=0;
-            int countPatient=0;
-            int countDiagnoses=0;
-            while ((line=reader.readLine()) !=null) {
+            int countDoctor = 0;
+            int countPatient = 0;
+            int countDiagnoses = 0;
+            while ((line = reader.readLine()) != null) {
                 char[] c = line.toCharArray();
                 if (c[0] == '|') {
-                    countPatient=0;
+                    countPatient = 0;
                     String[] doctors = line.split(",");
                     for (int i = 0; i < doctors.length; i++) {
                         String[] dField = doctors[i].split("=");
                         doctors[i] = dField[1];
                     }
                     hospital.addDoctor(doctors[2], doctors[1], ("Gender." + doctors[3]), doctors[4]);
-                    hospital.getDoctors().get(countDoctor).setNum(Integer.parseInt(doctors[0]));
+                    int num;
+                    try {
+                        num = Integer.parseInt(doctors[0]);
+                        hospital.getDoctors().get(countDoctor).setNum(num);
+                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                        num = 1;
+                    }
+                    Patient.setN(num);
                     countDoctor++;
                 } else if (c[0] == '\\') {
-                    countDiagnoses=0;
+                    countDiagnoses = 0;
                     String[] patients = line.split(",");
                     for (int i = 0; i < patients.length; i++) {
                         String[] dField = patients[i].split("=");
                         patients[i] = dField[1];
                     }
-                    hospital.getDoctors().get(countDoctor-1).addPatient(patients[1], patients[2],
-                            ("Gender." + patients[3]), patients[4],("BloodType." + patients[5]));
-                    hospital.getDoctors().get(countDoctor-1).getPatients().get(countPatient).
-                            setNum(Integer.parseInt(patients[0]));
+                    int num;
+                    try {
+                        hospital.getDoctors().get(countDoctor - 1).addPatient(patients[1], patients[2],
+                                ("Gender." + patients[3]), patients[4], ("BloodType." + patients[5]));
+                        num = Integer.parseInt(patients[0]);
+                        hospital.getDoctors().get(countDoctor - 1).getPatients().get(countPatient).
+                                setNum(num);
+                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                        num = 1;
+                    }
+                    Patient.setN(num);
                     countPatient++;
 
                 } else if (c[0] == '/') {
@@ -76,10 +90,13 @@ public class FileWork implements HospitalServices {
                         String[] dField = diagnoses[i].split("=");
                         diagnoses[i] = dField[1];
                     }
-                    hospital.getDoctors().get(countDoctor-1).getPatients().get(countPatient-1).
-                            addDiagnoses(diagnoses[0]);
-                    hospital.getDoctors().get(countDoctor-1).getPatients().get(countPatient-1).getDiagnoses().
-                            get(countDiagnoses).setDate(diagnoses[1]);
+                    try {
+                        hospital.getDoctors().get(countDoctor - 1).getPatients().get(countPatient - 1).
+                                addDiagnoses(diagnoses[0]);
+                        hospital.getDoctors().get(countDoctor - 1).getPatients().get(countPatient - 1).getDiagnoses().
+                                get(countDiagnoses).setDate(diagnoses[1]);
+                    }catch (IndexOutOfBoundsException ignore){
+                    }
                     countDiagnoses++;
                 }
             }

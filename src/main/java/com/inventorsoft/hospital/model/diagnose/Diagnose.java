@@ -1,10 +1,16 @@
 package com.inventorsoft.hospital.model.diagnose;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Diagnose {
+
+    @NotNull(message = "Description mast be given")
+    @Size(min = 3, message = "Min description length mast be 3 characters")
     private String Description;
+
     private String date;
 
     public Diagnose(String description) {

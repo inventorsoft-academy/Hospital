@@ -1,11 +1,16 @@
 package com.inventorsoft.hospital.model.hospital;
 
 import com.inventorsoft.hospital.model.person.Doctor;
+import com.inventorsoft.hospital.services.ConsoleUserInterface;
+import com.inventorsoft.hospital.services.MyValidator;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hospital {
+public class Hospital implements MyValidator{
     private List<Doctor> doctors;
 
     public Hospital() {
@@ -16,13 +21,19 @@ public class Hospital {
         return doctors;
     }
 
-    public void setDoctors(List<Doctor> doctors) {
-        this.doctors = doctors;
-    }
-
     public boolean addDoctor(String lastName, String firstName, String gender, String specialisation) {
-        doctors.add(new Doctor(lastName, firstName, gender, specialisation));
-        return true;
+        Doctor doctor = new Doctor(lastName, firstName, gender, specialisation);
+
+        if (validate(doctor, Validation.buildDefaultValidatorFactory().getValidator())){
+            doctors.add(doctor);
+            ConsoleUserInterface.log.info("User add new doctor: last name" + lastName
+                    + " first name " + firstName
+                    + " gender " + gender
+                    + " specialisation " + specialisation);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public boolean removeDoctorByFirstName(String firstName) {
@@ -86,5 +97,9 @@ public class Hospital {
             builder.append(d.toString()).append('\n');
         }
         return String.valueOf(builder);
+    }
+
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
     }
 }
