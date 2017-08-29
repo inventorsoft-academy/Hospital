@@ -1,8 +1,12 @@
-package com.inventorsoft.hospital.services;
+package co.inventorsoft.academy.hospital.ui;
 
-import com.inventorsoft.hospital.model.hospital.Hospital;
-import com.inventorsoft.hospital.model.person.Doctor;
-import com.inventorsoft.hospital.model.person.Patient;
+import co.inventorsoft.academy.hospital.doa.DataWork;
+import co.inventorsoft.academy.hospital.doa.FileWork;
+import co.inventorsoft.academy.hospital.doa.JSONFormat;
+import co.inventorsoft.academy.hospital.model.Diagnose;
+import co.inventorsoft.academy.hospital.model.Doctor;
+import co.inventorsoft.academy.hospital.model.Hospital;
+import co.inventorsoft.academy.hospital.model.Patient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,9 +18,10 @@ public class ConsoleUserInterface {
 
     public void run() {
         log.info("Run program");
+
         Hospital hospital = new Hospital();
         Scanner scan = new Scanner(System.in);
-        HospitalServices hospitalServices;
+        DataWork hospitalServices;
         System.out.println("Enter format to work program");
         System.out.println("Select variant \n 1 - txt \n 2 - json");
         int formatVar = scan.nextInt();
@@ -43,14 +48,12 @@ public class ConsoleUserInterface {
                     log.info("user run program");
                     boolean isReturnDoc = true;
                     while (isReturnDoc) {
-                        System.out.println(hospital.showAllDoctor());
+                        for (Doctor doctor:hospital.getDoctors()) {
+                            System.out.println(doctor.toString());
+                        }
                         System.out.println("Select variant \n" +
                                 "1 - Add doctor \n" +
-                                "2 - Remove all doctor by first name \n" +
-                                "3 - Remove all doctor by last name \n" +
-                                "4 - Remove all doctor by full name \n" +
-                                "5 - Remove all doctor by gender \n" +
-                                "6 - Remove all doctor by specialisation \n" +
+
                                 "7 - Select doctor by number \n" +
                                 "8 - Return previous menu");
                         int varDoc = scan.nextInt();
@@ -64,40 +67,7 @@ public class ConsoleUserInterface {
                                 String gender = scan.next();
                                 System.out.println("Enter doctor specialisation");
                                 String specialisation = scan.next();
-                                System.out.println(hospital.addDoctor(lastName, firstName, gender, specialisation));
-                                break;
-                            case 2:
-                                System.out.println("Enter doctor first name");
-                                String firstNameByRemove = scan.next();
-                                System.out.println(hospital.removeDoctorByFirstName(firstNameByRemove));
-                                log.info("User remove doctor by first name: " + firstNameByRemove);
-                                break;
-                            case 3:
-                                System.out.println("Enter doctor last name");
-                                String lastNameByRemove = scan.next();
-                                System.out.println(hospital.removeDoctorByLastName(lastNameByRemove));
-                                log.info("User remove doctor by last name: " + lastNameByRemove);
-                                break;
-                            case 4:
-                                System.out.println("Enter doctor first name and last name by enter");
-                                String firstNameByRemove2 = scan.next();
-                                String lastNameByRemove2 = scan.next();
-                                System.out.println(hospital.removeDoctorByFullName(firstNameByRemove2,
-                                        lastNameByRemove2));
-                                log.info("User remove doctor by: last name: " + lastNameByRemove2
-                                        + " first name " + firstNameByRemove2);
-                                break;
-                            case 5:
-                                System.out.println("Enter doctor Gender(MALE, FEMALE)");
-                                String genderByRemove = scan.next();
-                                System.out.println(hospital.removeDoctorByGender(genderByRemove));
-                                log.info("User remove doctor by gender: " + genderByRemove);
-                                break;
-                            case 6:
-                                System.out.println("Enter doctor specialisation");
-                                String specialisationByRemove = scan.next();
-                                System.out.println(hospital.removeDoctorBySpecialisation(specialisationByRemove));
-                                log.info("User remove doctor by specialisation: " + specialisationByRemove);
+                                System.out.println(hospital.addDoctor(new Doctor(lastName, firstName, gender, specialisation)));
                                 break;
                             case 7:
                                 try {
@@ -114,14 +84,12 @@ public class ConsoleUserInterface {
                                     boolean isReturnPat = true;
                                     while (isReturnPat) {
                                         assert doc != null;
-                                        System.out.println(doc.showAllPatient());
+                                        for (Patient patient:doc.getPatients()) {
+                                            System.out.println(patient.toString());
+                                        }
                                         System.out.println("Select variant \n" +
                                                 "1 - Add patient \n" +
-                                                "2 - Remove all patient by first name \n" +
-                                                "3 - Remove all patient by last name \n" +
-                                                "4 - Remove all patient by full name \n" +
-                                                "5 - Remove all patient by gender \n" +
-                                                "6 - Remove all patient by blood type \n" +
+
                                                 "7 - Select patient by number \n" +
                                                 "8 - Return previous menu");
                                         int varPat = scan.nextInt();
@@ -138,41 +106,7 @@ public class ConsoleUserInterface {
                                                 String DOB = scan.nextLine();
                                                 System.out.println("Enter patient blood type");
                                                 String bloodType = scan.next();
-                                                System.out.println(doc.addPatient(lastNamePat, firstNamePat, genderPat, DOB, bloodType));
-                                                break;
-                                            case 2:
-                                                System.out.println("Enter patient first name");
-                                                String firstNameByRemovePat = scan.next();
-                                                System.out.println(doc.removePatientByFirstName(firstNameByRemovePat));
-                                                log.info("User remove patient by first name: " + firstNameByRemovePat);
-                                                break;
-                                            case 3:
-                                                System.out.println("Enter patient last name");
-                                                String lastNameByRemovePat = scan.next();
-                                                System.out.println(doc.removePatientByLastName(lastNameByRemovePat));
-                                                log.info("User remove patient by last name: " + lastNameByRemovePat);
-                                                break;
-                                            case 4:
-
-                                                System.out.println("Enter patient first name and last name by enter");
-                                                String firstNameByRemovePat2 = scan.next();
-                                                String lastNameByRemovePat2 = scan.next();
-                                                System.out.println(doc.removePatientByFullName(firstNameByRemovePat2,
-                                                        lastNameByRemovePat2));
-                                                log.info("User remove patient by: last name: " + lastNameByRemovePat2
-                                                        + " first name " + firstNameByRemovePat2);
-                                                break;
-                                            case 5:
-                                                System.out.println("Enter patient Gender(MALE, FEMALE)");
-                                                String genderByRemovePat = scan.next();
-                                                System.out.println(doc.removePatientByGender(genderByRemovePat));
-                                                log.info("User remove patient by gender: " + genderByRemovePat);
-                                                break;
-                                            case 6:
-                                                System.out.println("Enter patient blood type");
-                                                String bloodTypeByRemove = scan.next();
-                                                System.out.println(doc.removePatientByBloodType(bloodTypeByRemove));
-                                                log.info("User remove patient by blood type: " + bloodTypeByRemove);
+                                                System.out.println(doc.addPatient(new Patient(lastNamePat, firstNamePat, genderPat, DOB, bloodType)));
                                                 break;
                                             case 7:
                                                 try {
@@ -189,7 +123,9 @@ public class ConsoleUserInterface {
                                                     boolean isReturnDiag = true;
                                                     while (isReturnDiag) {
                                                         assert pat != null;
-                                                        System.out.println(pat.showAllDiagnoses());
+                                                        for(Diagnose diagnose: pat.getDiagnoses()) {
+                                                            System.out.println(diagnose.toString());
+                                                        }
                                                         System.out.println("Select variant \n" +
                                                                 "1 - Add diagnose \n" +
                                                                 "2 - Return previous menu");
@@ -199,7 +135,7 @@ public class ConsoleUserInterface {
                                                                 System.out.println("Diagnose description ");
                                                                 scan.nextLine();
                                                                 String description = scan.nextLine();
-                                                                System.out.println(pat.addDiagnoses(description));
+                                                                System.out.println(pat.addDiagnoses(new Diagnose(description)));
                                                                 break;
                                                             case 2:
                                                                 isReturnDiag = false;
@@ -250,6 +186,7 @@ public class ConsoleUserInterface {
         }
         boolean b1 = hospitalServices.save(hospital);
         System.out.println(b1);
-        log.info("User save data by result " + b1);
+
+        log.info("Finish program");
     }
 }

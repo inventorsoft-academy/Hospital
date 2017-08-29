@@ -1,11 +1,16 @@
-package com.inventorsoft.hospital.model.person;
+package co.inventorsoft.academy.hospital.model;
 
-import com.inventorsoft.hospital.services.MyValidator;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public abstract class Person implements MyValidator {
+@Getter
+@Setter
+@NoArgsConstructor
+public abstract class Person {
     private static int n;
 
     protected int num;
@@ -16,16 +21,15 @@ public abstract class Person implements MyValidator {
 
     @NotNull(message = "first name mast be given")
     protected String firstName;
-
     protected Gender gender;
 
-    Person(String lastName, String firstName, String gender) {
+    Person(final String lastName, final String firstName, final String gender) {
         n++;
         num = n;
         this.lastName = lastName;
         this.firstName = firstName;
         switch (gender) {
-            case "m":
+            case "MALE":
                 this.gender = Gender.MALE;
                 break;
             default:
@@ -33,27 +37,20 @@ public abstract class Person implements MyValidator {
         }
     }
 
-    public static void setN(int n) {
+    public static void setN(final int n) {
         Person.n = n;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getGender() {
-        return gender.toString();
+    public void setNum(final int num) {
+        this.num = num;
     }
 
     public int getNum() {
         return num;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    private enum Gender {
+        MALE,
+        FEMALE
     }
 }

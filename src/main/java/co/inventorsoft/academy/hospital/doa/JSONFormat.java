@@ -1,15 +1,17 @@
-package com.inventorsoft.hospital.services;
+package co.inventorsoft.academy.hospital.doa;
 
+import co.inventorsoft.academy.hospital.model.Hospital;
+import co.inventorsoft.academy.hospital.model.Person;
+import co.inventorsoft.academy.hospital.ui.ConsoleUserInterface;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.inventorsoft.hospital.model.hospital.Hospital;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class JSONFormat implements HospitalServices {
+public class JSONFormat implements DataWork {
     private final static File file = new File("src\\main\\resources\\data.json");
 
     @Override
@@ -34,7 +36,7 @@ public class JSONFormat implements HospitalServices {
             return false;
         }
         hospital.setDoctors(h.getDoctors());
-        loadID();
+        Person.setN(loadID());
         return true;
     }
 

@@ -1,12 +1,14 @@
-package com.inventorsoft.hospital.services;
+package co.inventorsoft.academy.hospital.service;
+
+import co.inventorsoft.academy.hospital.ui.ConsoleUserInterface;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.Set;
 
-public interface MyValidator<T> {
+public class CustomValidator<T> {
 
-    default boolean validate(T object, Validator validator) {
+    public boolean validate(T object, Validator validator) {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(object);
         StringBuilder builder = new StringBuilder();
         for (ConstraintViolation<T> violation : constraintViolations) {
