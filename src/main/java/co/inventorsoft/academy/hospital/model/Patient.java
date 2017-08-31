@@ -25,7 +25,7 @@ public class Patient extends Person {
     private BloodType bloodType;
     private List<Diagnose> diagnoses;
 
-    public Patient(String firstName, String lastName, String gender, String DOB, String bloodType) {
+    public Patient(String lastName, String firstName, String gender, String DOB, String bloodType) {
         super(lastName, firstName, gender);
         this.DOB = DOB;
         switch (bloodType) {
@@ -78,13 +78,37 @@ public class Patient extends Person {
         this.doctorID = doctorID;
     }
 
+    public int getDoctorID() {
+        return doctorID;
+    }
+
+    public String getDOB() {
+        return DOB;
+    }
+
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
+    }
+
+    public BloodType getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(BloodType bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public void setDiagnoses(List<Diagnose> diagnoses) {
+        this.diagnoses = diagnoses;
+    }
+
     @Override
     public String toString() {
         return "id =" + num +
                 ", doctorID=" + doctorID +
-                ", lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", DOB='" + DOB + '\'' +
+                ", lastName=" + lastName +
+                ", firstName'" + firstName +
+                ", DOB=" + DOB +
                 ", bloodType=" + bloodType +
                 ", gender=" + gender;
     }

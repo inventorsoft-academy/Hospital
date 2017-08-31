@@ -15,16 +15,21 @@ public class DefaultHospitalService implements HospitalService {
 
     @Override
     public List<Doctor> getDoctor() {
-        return hospitalRepository.findAll();
+        return hospitalRepository.findAllDoctor();
     }
 
     @Override
     public Doctor saveDoctor(Doctor doctor) {
-        return hospitalRepository.save(doctor);
+        return hospitalRepository.saveDoctors(doctor);
     }
 
     @Override
-    public Optional<Doctor> findById(Integer id) {
-        return hospitalRepository.findById(id);
+    public String deleteDoctor(final Integer id) {
+        return hospitalRepository.deleteDoctor(id);
+    }
+
+    @Override
+    public Optional<Doctor> findByIdDoctor(Integer id) {
+        return hospitalRepository.findByIdDoctor(id);
     }
 }

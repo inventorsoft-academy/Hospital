@@ -2,6 +2,7 @@ package co.inventorsoft.academy.hospital.model;
 
 import co.inventorsoft.academy.hospital.service.CustomValidator;
 import co.inventorsoft.academy.hospital.ui.ConsoleUserInterface;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Hospital {
     private List<Doctor> doctors;
 

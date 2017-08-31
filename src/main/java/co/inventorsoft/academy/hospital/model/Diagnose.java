@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @EqualsAndHashCode
 public class Diagnose {
+    private int id;
 
     private int patientID;
 
@@ -33,6 +34,30 @@ public class Diagnose {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getPatientID() {
+        return patientID;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

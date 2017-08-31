@@ -7,50 +7,38 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.net.URI;
 import java.util.List;
 
 @AllArgsConstructor
 @Controller
 @RequestMapping(value = "/hospital")
+@CrossOrigin(value = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class HospitalController {
     private HospitalService hospitalService;
 
-    @GetMapping(value = "/show-all",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/show-all-doctor",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Doctor> getDoctors(){
         return hospitalService.getDoctor();
     }
 
-    @GetMapping(value = "/index.php")
-    public ModelAndView showDoctors(final ModelAndView modelAndView) {
-        modelAndView.addObject("doctors", hospitalService.getDoctor());
-        modelAndView.setViewName("doctors");
-        return modelAndView;
-    }
-
     @GetMapping("/{doctorId:\\d+}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable Integer doctorId) {
-        return hospitalService.findById(doctorId).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Doctor> createDoctorFromUrlEncoded(@ModelAttribute Doctor doctorInfo) {
-        final Doctor createdDoctor = hospitalService.saveDoctor(doctorInfo);
-        return renderResponseWithLocation(createdDoctor);
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Doctor> createDoctorFromJson(@RequestBody Doctor doctorInfo) {
-        final Doctor createdDoctor = hospitalService.saveDoctor(doctorInfo);
-        return renderResponseWithLocation(createdDoctor);
+        return hospitalService.findByIdDoctor(doctorId).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
-
-    private ResponseEntity<Doctor> renderResponseWithLocation(Doctor createdDoctor) {
-        return ResponseEntity.created(URI.create(String.format("/doctors/%d", createdDoctor.getNum()))).body(createdDoctor);
+    @RequestMapping(value = "/create-doctor", method = RequestMethod.POST)
+    public @ResponseBody Doctor createDoctor(@RequestParam String lastName,@RequestParam String firstName,
+                                                @RequestParam String gender, @RequestParam String specialisation){
+        Doctor doctor=new Doctor(lastName,firstName,gender,specialisation);
+        return hospitalService.saveDoctor(doctor);
     }
+
+    @RequestMapping(value = "/delete-doctor", method = RequestMethod.DELETE)
+    public @ResponseBody String deleteDoctor(@RequestParam int doctorId) {
+        return hospitalService.deleteDoctor(doctorId);
+    }
+
 }

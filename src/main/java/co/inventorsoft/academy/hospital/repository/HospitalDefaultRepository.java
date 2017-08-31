@@ -1,39 +1,64 @@
 package co.inventorsoft.academy.hospital.repository;
 
+import co.inventorsoft.academy.hospital.doa.DataManager;
 import co.inventorsoft.academy.hospital.model.Doctor;
+import co.inventorsoft.academy.hospital.model.Hospital;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class HospitalDefaultRepository implements HospitalRepository {
-    private static final List<Doctor> storage;
+    private Hospital storage;
+    private DataManager dataManager;
 
-    static {
-        storage = new ArrayList<>();
+    public HospitalDefaultRepository(DataManager dataManager) {
+        this.dataManager = dataManager;
+    }
 
-        storage.add(new Doctor("ytyt", "oip-]-", "MALE", "erhytrt"));
-        storage.add(new Doctor("ytiyui", "t6745", "MALE", "ty54ytry"));
-        storage.add(new Doctor("4355", "esfdfgb", "FEMALE", "trytrutyu"));
-        storage.add(new Doctor("rttuyi", "5464ty", "MALE", "tutyutyu"));
-        storage.add(new Doctor("po[-", "yrty56", "FEMALE", "tutrurtu"));
+    @PostConstruct
+    public void init(){
+        Hospital hospital=new Hospital();
+        dataManager.load(hospital);
+        storage=hospital;
     }
 
     @Override
-    public List<Doctor> findAll() {
-        return storage;
+    public List<Doctor> findAllDoctor() {
+        return storage.getDoctors();
     }
 
     @Override
-    public Doctor save(Doctor doctor) {
-        storage.add(doctor);
+    public Doctor saveDoctors(Doctor doctor) {
+        storage.addDoctor(doctor);
+        dataManager.save(storage);
         return doctor;
     }
 
     @Override
-    public Optional<Doctor> findById(Integer id) {
-        return storage.stream().filter(info -> id.equals(info.getNum())).findAny();
+    public String deleteDoctor(Integer id) {
+        int i = -1;
+        boolean isDeleted = false;
+        for (Doctor doctor : storage.getDoctors()) {
+            i++;
+            if (id.equals(doctor.getNum())) {
+                isDeleted = true;
+                break;
+            }
+        }
+        if (isDeleted && i > -1) {
+            storage.getDoctors().remove(i);
+            dataManager.save(storage);
+            return "deleteDoctor successful";
+        } else {
+            return "doctor not found";
+        }
+    }
+
+    @Override
+    public Optional<Doctor> findByIdDoctor(Integer id) {
+        return storage.getDoctors().stream().filter(info -> id.equals(info.getNum())).findAny();
     }
 }

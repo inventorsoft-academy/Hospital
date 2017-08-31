@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class JSONFormat implements DataWork {
+public class JSONFormat implements DataManager {
     private final static File file = new File("src\\main\\resources\\data.json");
 
     @Override

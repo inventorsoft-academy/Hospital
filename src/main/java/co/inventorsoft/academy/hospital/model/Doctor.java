@@ -1,6 +1,7 @@
 package co.inventorsoft.academy.hospital.model;
 
 import co.inventorsoft.academy.hospital.service.CustomValidator;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Doctor extends Person {
 
     @NotNull(message = "specialisation mast by given")
@@ -46,7 +48,7 @@ public class Doctor extends Person {
 
     @Override
     public String toString() {
-        return "id= " + num +
+        return "id=" + num +
                 ", last name= " + lastName +
                 ", first name= " + firstName +
                 ", specialisation= " + specialisation +

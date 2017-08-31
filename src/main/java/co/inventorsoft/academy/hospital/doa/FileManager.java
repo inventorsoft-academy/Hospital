@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileWork implements DataWork {
+public class FileManager implements DataManager {
 
     private static final File DOCTORS_FILE =new File("src\\main\\resources\\doctors.txt");
     private static final File PATIENTS_FILE =new File("src\\main\\resources\\patients.txt");
@@ -35,10 +35,14 @@ public class FileWork implements DataWork {
                     }
                 }
             }
-            ConsoleUserInterface.log.info("File save");
+            ConsoleUserInterface.log.info("File saveDoctors");
+
+            doctorsWriter.close();
+            patientsWriter.close();
+            diagnosesWriter.close();
             return true;
         }catch (IOException e){
-            ConsoleUserInterface.log.error("File not save"+'\n'+e.getMessage());
+            ConsoleUserInterface.log.error("File not saveDoctors"+'\n'+e.getMessage());
             return false;
         }
     }
@@ -50,8 +54,8 @@ public class FileWork implements DataWork {
             BufferedReader patientsReader = new BufferedReader(new FileReader(PATIENTS_FILE));
             BufferedReader diagnosesReader = new BufferedReader(new FileReader(DIAGNOSES_FILE));
 
-            List<String> doctors=new ArrayList<>();
-            List <String> doctorsField=new ArrayList<>();
+            List<String> doctors;
+            List <String> doctorsField;
 
             List<String> patients=new ArrayList<>();
             List <String> patientsField=new ArrayList<>();
@@ -65,11 +69,17 @@ public class FileWork implements DataWork {
 
             String line;
             while ((line = doctorsReader.readLine()) != null) {
+                doctors=new ArrayList<>();
                 doctors.add(line);
                 String[] doc = line.split(",");
+                doctorsField=new ArrayList<>();
                 for (String aDoc : doc) {
                     String[] dField = aDoc.split("=");
-                    doctorsField.add(dField[1]);
+                    try {
+                        doctorsField.add(dField[1]);
+                    }catch (IndexOutOfBoundsException e){
+                        ConsoleUserInterface.log.info(e.getMessage());
+                    }
                 }
                 hospital.addDoctor(new Doctor(doctorsField.get(1),doctorsField.get(2),
                         doctorsField.get(4),doctorsField.get(3)));
@@ -104,17 +114,29 @@ public class FileWork implements DataWork {
                 }
                 countPatient++;
             }
-            while ((line = diagnosesReader.readLine()) != null) {
-                diagnoses.add(line);
-                String[] diagnose = line.split(",");
+//            while ((line = diagnosesReader.readLine()) != null) {
+//                diagnoses.add(line);
+//                String[] diagnose = line.split(",");
+//                for (int i = 0; i < diagnose.length; i++) {
+//                    String[] dField = diagnose[i].split("=");
+//                    diagnose[i] = dField[1];
+//                }
+//                int patientId;
+//                try {
+//
+//                }
+//                for (Doctor doctor:hospital.getDoctors()){
+//                    for (Patient patient:doctor.getPatients()){
+//                        if (patient.getNum()= )
+//                    }
+//                }
+//            }
 
-                try {
-
-                }catch (NumberFormatException e){
-                    ConsoleUserInterface.log.info("Non integer "+e.getMessage());
-                }
-            }
             ConsoleUserInterface.log.info("File read");
+
+            doctorsReader.close();
+            patientsReader.close();
+            diagnosesReader.close();
             return true;
         }catch (IOException e){
             ConsoleUserInterface.log.error("File not read"+'\n'+e.getMessage());

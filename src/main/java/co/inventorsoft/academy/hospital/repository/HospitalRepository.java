@@ -7,9 +7,11 @@ import java.util.Optional;
 
 public interface HospitalRepository {
 
-    List<Doctor> findAll();
+    List<Doctor> findAllDoctor();
 
-    Doctor save(final Doctor doctor);
+    Doctor saveDoctors(final Doctor doctor);
 
-    Optional<Doctor> findById(final Integer id);
+    String deleteDoctor(final Integer id);
+
+    Optional<Doctor> findByIdDoctor(final Integer id);
 }

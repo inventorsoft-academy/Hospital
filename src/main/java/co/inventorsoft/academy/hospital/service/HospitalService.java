@@ -11,5 +11,7 @@ public interface HospitalService {
 
     Doctor saveDoctor(final Doctor doctor);
 
-    Optional<Doctor> findById(final Integer id);
+    String deleteDoctor(final Integer id);
+
+    Optional<Doctor> findByIdDoctor(final Integer id);
 }

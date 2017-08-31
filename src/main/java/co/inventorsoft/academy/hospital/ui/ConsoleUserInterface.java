@@ -1,7 +1,7 @@
 package co.inventorsoft.academy.hospital.ui;
 
-import co.inventorsoft.academy.hospital.doa.DataWork;
-import co.inventorsoft.academy.hospital.doa.FileWork;
+import co.inventorsoft.academy.hospital.doa.DataManager;
+import co.inventorsoft.academy.hospital.doa.FileManager;
 import co.inventorsoft.academy.hospital.doa.JSONFormat;
 import co.inventorsoft.academy.hospital.model.Diagnose;
 import co.inventorsoft.academy.hospital.model.Doctor;
@@ -21,13 +21,13 @@ public class ConsoleUserInterface {
 
         Hospital hospital = new Hospital();
         Scanner scan = new Scanner(System.in);
-        DataWork hospitalServices;
+        DataManager hospitalServices;
         System.out.println("Enter format to work program");
         System.out.println("Select variant \n 1 - txt \n 2 - json");
         int formatVar = scan.nextInt();
         switch (formatVar) {
             case 1:
-                hospitalServices = new FileWork();
+                hospitalServices = new FileManager();
                 log.info("User select txt format for working");
                 break;
             default:
