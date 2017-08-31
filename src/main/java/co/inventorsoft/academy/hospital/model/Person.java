@@ -49,6 +49,30 @@ public abstract class Person {
         return num;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getGender() {
+        return gender.toString();
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     private enum Gender {
         MALE,
         FEMALE

@@ -46,6 +46,18 @@ public class Doctor extends Person {
         return patients;
     }
 
+    public String getSpecialisation() {
+        return specialisation;
+    }
+
+    public void setSpecialisation(String specialisation) {
+        this.specialisation = specialisation;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
     @Override
     public String toString() {
         return "id=" + num +
